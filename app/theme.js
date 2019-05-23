@@ -11,7 +11,7 @@ const fontScale =()=>1.0/DeviceInfo.Dimensions.screen.fontScale;
 global.appTheme = {
 
     /*App主题颜色 默认主题颜色*/
-    themeColor:"#268BE8",
+    themeColor:"#00abff",
 
     /*字体大小 App 默认大小 */
     fontSize_12: 12*fontScale,

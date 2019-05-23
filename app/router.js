@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react'
-import {BackHandler, Animated, Easing} from 'react-native'
+import {BackHandler, Animated, Easing, Platform} from 'react-native'
 import {
     createStackNavigator,
     createBottomTabNavigator,
@@ -18,10 +18,31 @@ import Login from './containers/Login'
 import Home from './containers/Home'
 import Account from './containers/Account'
 import Detail from './containers/Detail'
+import ArticleDetail from './containers/ArticleDetail'
+import Knowledge from './containers/Knowledge'
+import ProjectList from './containers/ProjectList'
+
+//设置标题栏高度以及padding
+let headerHeight = Platform.OS === 'ios' ? 43.5 : 56
+let statusPadding = Platform.OS === 'ios' ? 20 : 0
+
+if (Platform.Version >= 21) {
+    statusPadding = 25
+} else if (Platform.Version >= 25) {
+    statusPadding = 24
+}
 
 const HomeNavigator = createBottomTabNavigator({
     Home: {screen: Home},
+    Knowledge: {screen: Knowledge},
     Account: {screen: Account}
+}, {
+    tabBarOptions: {
+        activeTintColor: '#00abff',
+        labelStyle: {
+            fontSize: 12,
+        }
+    }
 });
 
 HomeNavigator.navigationOptions = ({navigation}) => {
@@ -29,7 +50,7 @@ HomeNavigator.navigationOptions = ({navigation}) => {
 
     return {
         headerTitle: routeName,
-        header: null
+        header: null,
     }
 }
 //主路由
@@ -39,7 +60,7 @@ const MainNavigator = createStackNavigator(
         Detail: {screen: Detail},
     },
     {
-        headerMode: 'float',
+        headerMode: 'none',
         navigationOptions: {
             gesturesEnabled: false,
             headerStyle: {
@@ -51,15 +72,41 @@ const MainNavigator = createStackNavigator(
 
 const AppNavigator = createStackNavigator(
     {
-        Main: {screen: MainNavigator},
-        Login: {screen: Login},
+        Main: {
+            screen: MainNavigator,
+            headerMode: 'none',
+            navigationOptions: {
+                header: null
+            }
+        },
+        Login: {
+            screen: Login,
+            headerMode: 'none',
+        },
+        ArticleDetail: {
+            screen: ArticleDetail,
+        },
+        ProjectList: {
+            screen: ProjectList,
+        }
     },
     {
-        headerMode: 'none',
+        headerMode: 'float',
         mode: 'modal',
         navigationOptions: {
             gesturesEnabled: false,
-            backgroundColor:'#268BE8'
+            backgroundColor: '#00abff',
+            headerStyle: {//头部样式
+                backgroundColor: '#00abff',
+                // height: headerHeight + statusPadding,
+                // paddingTop: statusPadding,
+                elevation: 0,
+                shadowOpacity: 0,
+            },
+            headerTitleStyle: {
+                color: '#ffffff'
+            },
+            headerTintColor: '#ffffff',
         },
         transitionConfig: () => ({
             transitionSpec: {

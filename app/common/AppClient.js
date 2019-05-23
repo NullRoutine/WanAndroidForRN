@@ -15,6 +15,7 @@ function getFormData(params) {
     return formData
 }
 
+
 function request(method, url, params = '', timeOut) {
     let request_url = base_url + url
     if (url.startsWith('http://') || url.startsWith('https://')) {
@@ -32,28 +33,23 @@ function request(method, url, params = '', timeOut) {
     config['headers'] = {}
     return new Promise((resolve, reject) => {
         const timeout = setTimeout(() => {
-            reject({ERR_MSG: '请求超时,请重试。', ERR_CODE: '400'})
+            reject({ERR_MSG: '请求超时,请重试。', ERR_CODE: '401'})
         }, timeOut || MAX_WAITING_TIME)
         fetch(request_url, config)
-        .then(res => {
-            // if ((res.url.indexOf('user/login')!=-1 || res.url.indexOf('user/register'))!=-1 && res.headers.map.hasOwnProperty('set-cookie')) {
-            //     const cookie = res.headers.map['set-cookie'][0]
-            //     RealmUtil.saveCookie(cookie)
-            // }
-            return res.json()
-        })
+            .then(res => {
+                return res.json()
+            })
             .then(json => {
                 log('请求成功', json)
                 if (json.errorCode === -1) {
-                    reject(json.errorMsg)
+                    reject(json.ERR_MSG)
                 } else {
                     resolve(json)
-                    clearTimeout(timeout)
                 }
+                clearTimeout(timeout)
             })
             .catch(err => {
-                console.log('请求错误', err)
-                reject(err)
+                reject({ERR_MSG: '网络连接错误，请检查您的网络连接或稍后再试。', ERR_CODE: '400'})
             })
     })
 }

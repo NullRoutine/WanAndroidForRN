@@ -116,9 +116,18 @@ android {
             include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
     }
+    signingConfigs {
+            release {
+                storeFile file("sign/zjcd.jks")
+                storePassword "123456"
+                keyAlias '从业人员考试'
+                keyPassword "123456"
+            }
+        }
     buildTypes {
         release {
             minifyEnabled enableProguardInReleaseBuilds
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
