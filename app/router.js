@@ -21,6 +21,8 @@ import Detail from './containers/Detail'
 import ArticleDetail from './containers/ArticleDetail'
 import Knowledge from './containers/Knowledge'
 import ProjectList from './containers/ProjectList'
+import NavigationList from './containers/NavigationList'
+import {Provider} from '@ant-design/react-native';
 
 //设置标题栏高度以及padding
 let headerHeight = Platform.OS === 'ios' ? 43.5 : 56
@@ -35,7 +37,8 @@ if (Platform.Version >= 21) {
 const HomeNavigator = createBottomTabNavigator({
     Home: {screen: Home},
     Knowledge: {screen: Knowledge},
-    Account: {screen: Account}
+    NavigationList: {screen: NavigationList},
+    // Account: {screen: Account}
 }, {
     tabBarOptions: {
         activeTintColor: '#00abff',
@@ -181,7 +184,9 @@ class Router extends PureComponent {
         const {app, dispatch, router} = this.props
         if (app.loading) return <Loading/>
 
-        return <App dispatch={dispatch} state={router}/>
+        return <Provider>
+            <App dispatch={dispatch} state={router}/>
+        </Provider>
     }
 }
 

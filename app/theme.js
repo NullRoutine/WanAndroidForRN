@@ -54,6 +54,7 @@ global.appTheme = {
 };
 
 global.log = (TAG,info) => {
+    // console.log(__DEV__)
     if (__DEV__) {
         if (TAG&&info){
             console.log("["+TAG+"]",info);

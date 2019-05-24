@@ -75,15 +75,15 @@ class Home extends Component {
     render() {
         const {navigation} = this.props
         return (<FlatList data={this.props.articleList}
-                          // refreshing={this.props.loading}
+            // refreshing={this.props.loading}
                           renderItem={this._renderItemView}
-                          // onRefresh={this._queryList}
+            // onRefresh={this._queryList}
                           refreshControl={
                               <RefreshControl
                                   refreshing={this.props.loading}
                                   onRefresh={this._queryList}
                                   tintColor="red"
-                                  colors={["red","green"]}
+                                  colors={["red", "green"]}
                               />
                           }
                           ListHeaderComponent={() => <BannerView navigation={navigation}
@@ -105,7 +105,7 @@ class Home extends Component {
                         <Text style={{
                             fontSize: 14,
                             color: "#999999"
-                        }}>{item.author}</Text>
+                        }}>作者:{item.author}</Text>
                     </View>
                     <Text style={{marginTop: 4, fontSize: 16, color: appTheme.color_333}}>{item.title}</Text>
                     <View style={styles.top}>

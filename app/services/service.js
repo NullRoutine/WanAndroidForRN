@@ -36,3 +36,10 @@ export const ProjectDetailList = async ({payload}) => {
     const {id, pageNum} = payload;
     return HttpUtil.get('/article/list/' + pageNum + '/json?cid=' + id)
 }
+/**
+ * 导航
+ * @returns {Promise.<*>}
+ */
+export const navigatorList = async () => {
+    return HttpUtil.get('/navi/json')
+}

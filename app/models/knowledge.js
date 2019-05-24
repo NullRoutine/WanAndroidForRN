@@ -8,7 +8,8 @@ import {createAction} from '../utils/index'
 export default {
     namespace: 'knowledge',
     state: {
-        knowledgeList: []
+        knowledgeList: [],
+        navList: [],
     },
     //更新数据
     reducers: {
@@ -25,9 +26,15 @@ export default {
         },
         * getProjectList({payload}, {call, put, select}) {
             const list = yield call(service.ProjectDetailList, {payload})
-                if (!!payload.callback) {
-                    yield payload.callback(list.data.datas)
-                }
+            if (!!payload.callback) {
+                yield payload.callback(list.data.datas)
+            }
+        },
+        * getNavList({payload}, {call, put, select}) {
+            const list = yield call(service.navigatorList, {payload})
+            yield put(createAction('updateState')({
+                navList: list.data
+            }))
         }
     }
 

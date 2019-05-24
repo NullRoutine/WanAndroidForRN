@@ -11,7 +11,8 @@ import homeModel from './app/models/home'
 import knowledgeModel from './app/models/knowledge'
 import logger from 'redux-logger'
 import './app/theme.js';
-// import {Toast} from 'antd-mobile-rn'
+import {Toast} from '@ant-design/react-native';
+
 YellowBox.ignoreWarnings(['Warning: ', 'Module RCTImageLoader', 'Class RCTCxxModule',]);
 
 const app = dva({
@@ -21,9 +22,9 @@ const app = dva({
     // onAction: [routerMiddleware],
     onAction: logger,
     onError(err) {
-        log('onError======dva>', err)
-        // Toast.offline(e.ERR_MSG, 3, null, false)
-    },
+        console.log('onError======dva>', err)
+        Toast.offline(err.ERR_MSG, 3, null, false)
+    }
 })
 
 const App = app.start(<Router/>);

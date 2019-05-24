@@ -23,7 +23,7 @@ function request(method, url, params = '', timeOut) {
     } else {
         request_url = base_url + url
     }
-    console.log(request_url)
+    log('url', request_url)
     let config = {
         method: method
     }
@@ -40,7 +40,7 @@ function request(method, url, params = '', timeOut) {
                 return res.json()
             })
             .then(json => {
-                log('请求成功', json)
+                console.log('请求成功', json)
                 if (json.errorCode === -1) {
                     reject(json.ERR_MSG)
                 } else {
