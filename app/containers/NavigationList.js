@@ -5,6 +5,7 @@ import React, {Component} from 'react'
 import {View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Dimensions} from 'react-native'
 import {connect} from 'react-redux'
 import {NavigationActions, createAction} from '../utils'
+import {ActivityIndicator} from '@ant-design/react-native'
 
 const height = Dimensions.get('window').height
 
@@ -48,6 +49,12 @@ class NavigationList extends Component {
     render() {
         const {navList} = this.props
         return (<View style={styles.content}>
+                <ActivityIndicator
+                    animating={this.props.loading}
+                    toast
+                    size="large"
+                    text="Loading..."
+                />
                 <View style={styles.leftStyle}>
                     <ScrollView ref={(ref) => this._sectionList = ref}>
                         {this._renderLeft(this.props.navList)}
@@ -73,7 +80,7 @@ class NavigationList extends Component {
         log('list', list)
         if (list && list.articles && list.articles.length) {
             return (list.articles.map((item, index) => {
-                return ( <TouchableOpacity
+                return (<TouchableOpacity
                         key={index}
                         style={{
                             alignItems: 'center',
@@ -81,7 +88,10 @@ class NavigationList extends Component {
                             justifyContent: 'center', height: 48
                         }}
                         onPress={() => {
-                            this.props.dispatch(NavigationActions.navigate({routeName: "ArticleDetail", params: {...item}}))
+                            this.props.dispatch(NavigationActions.navigate({
+                                routeName: "ArticleDetail",
+                                params: {...item}
+                            }))
                         }}
                     >
                         <Text style={{
@@ -101,7 +111,7 @@ class NavigationList extends Component {
 
     _renderLeft(list) {
         return (list.map((item, index) => {
-            return ( <TouchableOpacity
+            return (<TouchableOpacity
                     key={index}
                     style={[{
                         alignItems: 'center',

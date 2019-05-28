@@ -22,9 +22,13 @@ class BannerView extends PureComponent {
     _renderPage(image, index) {
         const {navigation, themeColor} = this.props
         return (
-            <TouchableNativeFeedback key={index}>
+            <TouchableNativeFeedback
+                onPress={() => {
+                    this.props.dispatch(navigation.navigate({routeName: "ArticleDetail", params: {...image}}))
+                }}
+                key={index}>
                 <View style={{borderRadius: 5}}>
-                    <Image style={{width: BannerWidth - 16, height: BannerHeight, borderRadius: 5}}
+                    <Image style={{width: BannerWidth - 16, height: 220, borderRadius: 5}}
                            source={{uri: image.imagePath}}/>
                     {/*<View style={styles.textWarpper}>*/}
                     {/*<Text style={styles.text}>{image.title}</Text>*/}
